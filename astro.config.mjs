@@ -3,11 +3,15 @@ import { defineConfig } from 'astro/config';
 
 import tailwind from '@astrojs/tailwind';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://haopeng138.github.io/',
   integrations: [tailwind()],
+
   redirects: {
     '/': '/es',
-  }
+  },
+
+  adapter: vercel()
 });
