@@ -1,0 +1,80 @@
+---
+// src/pages/[lang]/index.astro
+import MainLayout from '../../layouts/MainLayout.astro';
+import MenuItem from '../../components/MenuItem.astro';
+import LanguageToggle from '../../components/LanguageToggle.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { tapas, mainCourses, drinks, translations } from '../../data/menu';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' }, props: { lang: 'en' } },
+    { params: { lang: 'es' }, props: { lang: 'es' } },
+    { params: { lang: 'ca' }, props: { lang: 'ca' } }
+  ];
+}
+
+type Lang = 'es' | 'en' | 'ca';
+
+interface Props {
+  lang: Lang;
+}
+
+
+const { lang }: Props = Astro.props;
+---
+
+<MainLayout title="La Noche Menu">
+    <ThemeToggle />
+
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl transition-colors duration-300">
+        <LanguageToggle currentLang={lang} />
+
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-[#A3353E] mb-2">La Noche</h1>
+            <p class="text-gray-600 dark:text-gray-300">{translations.header[lang]}</p>
+        </header>
+
+        <section class="mb-8">
+            <h2 class="text-2xl border-b border-[#A3353E] pb-2 mb-4 text-black dark:text-white">
+                {translations.sections.tapas[lang]}
+            </h2>
+            {tapas.map(item => (
+                <MenuItem 
+                    name={item.name[lang]} 
+                    description={item.description[lang]}
+                    price={item.price}
+                    image={item.image}
+                />
+            ))}
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl border-b border-[#A3353E] pb-2 mb-4 text-black dark:text-white">
+                {translations.sections.mainCourses[lang]}
+            </h2>
+            {mainCourses.map(item => (
+                <MenuItem 
+                    name={item.name[lang]} 
+                    description={item.description[lang]}
+                    price={item.price}
+                    image={item.image}
+                />
+            ))}
+        </section>
+
+        <section>
+            <h2 class="text-2xl border-b border-[#A3353E] pb-2 mb-4 text-black dark:text-white">
+                {translations.sections.drinks[lang]}
+            </h2>
+            {drinks.map(item => (
+                <MenuItem 
+                    name={item.name[lang]} 
+                    description={item.description[lang]}
+                    price={item.price}
+                    image={item.image}
+                />
+            ))}
+        </section>
+    </div>
+</MainLayout>

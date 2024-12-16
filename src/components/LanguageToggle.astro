@@ -1,0 +1,29 @@
+---
+// src/components/LanguageToggle.astro
+interface Props {
+  currentLang: 'en' | 'es' | 'ca';
+}
+
+const { currentLang } = Astro.props;
+const languages = [
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'ca', name: 'Català', flag: 'cat' }
+];
+---
+
+<div class="flex justify-center space-x-4 mb-6">
+  {languages.map((lang) => (
+    <a 
+      href={`/${lang.code}`} 
+      class={`
+        px-4 py-2 rounded-full 
+        ${currentLang === lang.code 
+          ? 'bg-[#A3353E] text-white' 
+          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}
+      `}
+    >
+      <span class="mr-2">{lang.flag}</span>{lang.name}
+    </a>
+  ))}
+</div>
